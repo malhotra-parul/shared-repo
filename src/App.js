@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import NavBar from './components/layouts/NavBar';
 import axios from 'axios';
 import Users from './components/users/Users';
+import User from './components/users/User';
 import Search from '../src/components/users/Search';
 import Alert from '../src/components/layouts/Alert';
 import About from './components/pages/About';
@@ -80,7 +81,7 @@ class App extends Component {
 							<Route
 								exact
 								path="/"
-								render={(props) => (
+								render={() => (
 									<Fragment>
 										<Search
 											searchUsers={this.searchUsers}
@@ -93,6 +94,19 @@ class App extends Component {
 								)}
 							/>
 							<Route exact path="/about" component={About} />
+
+							<Route
+								exact
+								path="/user/:login"
+								render={(props) => (
+									<User
+										{...props}
+										user={this.state.user}
+										getUser={this.getUser}
+										loading={this.state.loading}
+									/>
+								)}
+							/>
 						</Switch>
 					</div>
 				</div>
