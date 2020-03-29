@@ -8,8 +8,8 @@ import Search from '../src/components/users/Search';
 import Alert from '../src/components/layouts/Alert';
 import About from './components/pages/About';
 import './App.css';
-const client_id = process.env.REACT_APP_CLIENT_ID;
-const secret_key = process.env.REACT_APP_CLIENT_SECRET;
+const client_id = 'f88c36400a1e75d9e468';
+const secret_key = '2d1bba9d9889b2c3175a0ed63843ebdc56cbcae8';
 
 class App extends Component {
 	state = {
@@ -55,8 +55,7 @@ class App extends Component {
 	getUserRepos = async (username) => {
 		this.setState({ loading: true });
 		const res = await axios.get(
-			`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env
-				.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_SECRET}`
+			`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${client_id}&client_secret=${secret_key}`
         );
         this.setState({repos : res.data, loading : false});
 	};
