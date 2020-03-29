@@ -63,7 +63,7 @@ class App extends Component{
         return(
             <Router>
             <div className="App">
-                    <NavBar />
+                    <NavBar title="GitHub React App"/>
                     <div className="container">
                     <Alert alert={this.state.alert}/>
                     <Switch>
