@@ -21,7 +21,6 @@ const App = () => {
 	const [ loading, setLoading ] = useState(false);
 	const [ alert, setAlert ] = useState(null);
 
-
 	//Get Single User Method
 	const getUser = async (username) => {
 		setLoading(true);
@@ -39,11 +38,6 @@ const App = () => {
 			`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${client_id}&client_secret=${secret_key}`
 		);
 		setRepos(res.data);
-		setLoading(false);
-	};
-
-	const clearUsers = () => {
-		setUsers([]);
 		setLoading(false);
 	};
 
@@ -68,11 +62,7 @@ const App = () => {
 								path="/"
 								render={() => (
 									<Fragment>
-										<Search
-											clearUsers={clearUsers}
-											showClear={users.length > 1 ? true : false}
-											setAlert={showAlert}
-										/>
+										<Search setAlert={showAlert} />
 										<Users />
 									</Fragment>
 								)}
