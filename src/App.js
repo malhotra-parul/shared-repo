@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 //ContextAPI
@@ -21,17 +21,6 @@ const App = () => {
 	const [ loading, setLoading ] = useState(false);
 	const [ alert, setAlert ] = useState(null);
 
-	useEffect(() => {
-		async function fetchData() {
-			setLoading(true);
-			const res = await axios.get(
-				`https://api.github.com/users?client_id=${client_id}&client_secret=${secret_key}`
-			);
-			setUsers(res.data);
-			setLoading(false);
-		}
-		fetchData();
-	}, []);
 
 	//Get Single User Method
 	const getUser = async (username) => {

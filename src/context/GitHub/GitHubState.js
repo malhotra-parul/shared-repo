@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
-import { SEARCH_USERS, GET_USER, CLEAR_USERS, SET_LOADING, GET_REPOS } from '../../types';
+import { SEARCH_USERS, GET_USER, CLEAR_USERS, SET_LOADING, GET_REPOS, ALL_USERS } from '../../types';
 
 import GithubContext from './githubContext';
 import GithubReducer from './githubReducer';
@@ -29,6 +29,15 @@ const GitHubState = (props) => {
 			payload: res.data.items
 		});
 	};
+	//all USERS
+	const allUsers = async () => {
+		setLoading();
+		const res = await axios.get(`https://api.github.com/users?client_id=${client_id}&client_secret=${secret_key}`);
+		dispatch({
+			type: ALL_USERS,
+			payload: res.data
+		});
+	};
 
 	//Loading
 	const setLoading = () => {
@@ -43,7 +52,8 @@ const GitHubState = (props) => {
 				user: state.user,
 				repos: state.repos,
 				loading: state.loading,
-				searchUsers
+				searchUsers,
+				allUsers
 			}}
 		>
 			{props.children}

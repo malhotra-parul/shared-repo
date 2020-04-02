@@ -1,4 +1,4 @@
-import { SEARCH_USERS, GET_USER, CLEAR_USERS, SET_LOADING, GET_REPOS } from '../../types';
+import { SEARCH_USERS, GET_USER, CLEAR_USERS, SET_LOADING, GET_REPOS, ALL_USERS } from '../../types';
 
 export default (state, action) => {
 	switch (action.type) {
@@ -9,6 +9,12 @@ export default (state, action) => {
 				loading: false
 			};
 
+		case ALL_USERS:
+			return {
+				...state,
+				users: action.payload,
+				loading: false
+			};
 		case SET_LOADING:
 			return {
 				...state,
