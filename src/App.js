@@ -1,5 +1,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+//ContextAPI
+import GithubState from './context/GitHub/GitHubState';
 import NavBar from './components/layouts/NavBar';
 import axios from 'axios';
 import Users from './components/users/Users';
@@ -11,21 +14,23 @@ import './App.css';
 const client_id = 'f88c36400a1e75d9e468';
 const secret_key = '2d1bba9d9889b2c3175a0ed63843ebdc56cbcae8';
 
-const App = ()=>{
-	const [users, setUsers] = useState([]);
-	const [user, setUser] = useState({});
-	const [repos, setRepos] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [alert, setAlert] = useState(null);
 
+const App = () => {
+	const [ users, setUsers ] = useState([]);
+	const [ user, setUser ] = useState({});
+	const [ repos, setRepos ] = useState([]);
+	const [ loading, setLoading ] = useState(false);
+	const [ alert, setAlert ] = useState(null);
 
-	useEffect( ()=>{
+	useEffect(() => {
 		async function fetchData() {
-		setLoading(true);
-		const res = await axios.get(`https://api.github.com/users?client_id=${client_id}&client_secret=${secret_key}`);
-		setUsers(res.data);
-		setLoading(false);
-	}
+			setLoading(true);
+			const res = await axios.get(
+				`https://api.github.com/users?client_id=${client_id}&client_secret=${secret_key}`
+			);
+			setUsers(res.data);
+			setLoading(false);
+		}
 		fetchData();
 	}, []);
 
@@ -56,7 +61,6 @@ const App = ()=>{
 		);
 		setRepos(res.data);
 		setLoading(false);
-
 	};
 
 	const clearUsers = () => {
@@ -65,14 +69,15 @@ const App = ()=>{
 	};
 
 	const showAlert = (msg, type) => {
-		setAlert({msg: msg, type: type});
+		setAlert({ msg: msg, type: type });
 
 		setTimeout(() => {
-				setAlert(null);
+			setAlert(null);
 		}, 3000);
 	};
 
-		return (
+	return (
+		<GithubState>
 			<Router>
 				<div className="App">
 					<NavBar title="GitHub React App" />
@@ -103,9 +108,9 @@ const App = ()=>{
 									<User
 										{...props}
 										user={user}
-                                        getUser={getUser}
-                                        repos={repos}
-                                        getUserRepos={getUserRepos}
+										getUser={getUser}
+										repos={repos}
+										getUserRepos={getUserRepos}
 										loading={loading}
 									/>
 								)}
@@ -114,7 +119,8 @@ const App = ()=>{
 					</div>
 				</div>
 			</Router>
-		);
-}
+		</GithubState>
+	);
+};
 
 export default App;
