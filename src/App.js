@@ -14,7 +14,6 @@ import './App.css';
 const client_id = 'f88c36400a1e75d9e468';
 const secret_key = '2d1bba9d9889b2c3175a0ed63843ebdc56cbcae8';
 
-
 const App = () => {
 	const [ users, setUsers ] = useState([]);
 	const [ user, setUser ] = useState({});
@@ -33,15 +32,6 @@ const App = () => {
 		}
 		fetchData();
 	}, []);
-
-	const searchUsers = async (text) => {
-		setLoading(true);
-		const res = await axios.get(
-			`https://api.github.com/search/users?q=${text}&client_id=${client_id}&client_secret=${secret_key}`
-		);
-		setLoading(false);
-		setUsers(res.data.items);
-	};
 
 	//Get Single User Method
 	const getUser = async (username) => {
@@ -90,7 +80,6 @@ const App = () => {
 								render={() => (
 									<Fragment>
 										<Search
-											searchUsers={searchUsers}
 											clearUsers={clearUsers}
 											showClear={users.length > 1 ? true : false}
 											setAlert={showAlert}
