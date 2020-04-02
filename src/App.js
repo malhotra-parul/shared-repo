@@ -21,16 +21,6 @@ const App = () => {
 	const [ loading, setLoading ] = useState(false);
 	const [ alert, setAlert ] = useState(null);
 
-	//Get Single User Method
-	const getUser = async (username) => {
-		setLoading(true);
-		const res = await axios.get(
-			`https://api.github.com/users/${username}?client_id=${client_id}&client_secret=${secret_key}`
-		);
-		setUser(res.data);
-		setLoading(false);
-	};
-
 	//get repos method
 	const getUserRepos = async (username) => {
 		setLoading(true);
@@ -72,16 +62,7 @@ const App = () => {
 							<Route
 								exact
 								path="/user/:login"
-								render={(props) => (
-									<User
-										{...props}
-										user={user}
-										getUser={getUser}
-										repos={repos}
-										getUserRepos={getUserRepos}
-										loading={loading}
-									/>
-								)}
+								render={(props) => <User {...props} repos={repos} getUserRepos={getUserRepos} />}
 							/>
 						</Switch>
 					</div>

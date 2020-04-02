@@ -46,6 +46,18 @@ const GitHubState = (props) => {
 		});
 	};
 
+	//Get Single User Method
+	const getUser = async (username) => {
+		setLoading();
+		const res = await axios.get(
+			`https://api.github.com/users/${username}?client_id=${client_id}&client_secret=${secret_key}`
+		);
+		dispatch({
+			type: GET_USER,
+			payload: res.data
+		});
+	};
+
 	//Loading
 	const setLoading = () => {
 		dispatch({
@@ -61,7 +73,8 @@ const GitHubState = (props) => {
 				loading: state.loading,
 				searchUsers,
 				allUsers,
-				clearUsers
+				clearUsers,
+				getUser
 			}}
 		>
 			{props.children}
