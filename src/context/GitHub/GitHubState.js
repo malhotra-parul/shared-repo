@@ -85,6 +85,18 @@ const GitHubState = (props) => {
 					}
 		});
 	}
+	// get repositories
+	const getRepos = async (username) => {
+		setLoading();
+		const res = await axios.get(
+			`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${client_id}&client_secret=${secret_key}`
+		);
+		dispatch({
+			type: GET_REPOS,
+			payload : res.data
+		})
+	};
+
 
 	return (
 		<GithubContext.Provider
@@ -98,7 +110,8 @@ const GitHubState = (props) => {
 				allUsers,
 				clearUsers,
 				getUser,
-				showAlert
+				showAlert,
+				getRepos
 			}}
 		>
 			{props.children}

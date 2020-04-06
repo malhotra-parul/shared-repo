@@ -10,7 +10,7 @@ const Users = () => {
 	const { loading, users, allUsers } = githubContext;
 	useEffect(() => {
 		allUsers();
-	}, []);
+	},[]);
 
 	if (loading) {
 		return <Spinners />;
