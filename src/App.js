@@ -15,8 +15,8 @@ const client_id = 'f88c36400a1e75d9e468';
 const secret_key = '2d1bba9d9889b2c3175a0ed63843ebdc56cbcae8';
 
 const App = () => {
-	const [ users, setUsers ] = useState([]);
-	const [ user, setUser ] = useState({});
+	//const [ users, setUsers ] = useState([]);
+	//const [ user, setUser ] = useState({});
 	const [ repos, setRepos ] = useState([]);
 	const [ loading, setLoading ] = useState(false);
 	const [ alert, setAlert ] = useState(null);
@@ -29,14 +29,6 @@ const App = () => {
 		);
 		setRepos(res.data);
 		setLoading(false);
-	};
-
-	const showAlert = (msg, type) => {
-		setAlert({ msg: msg, type: type });
-
-		setTimeout(() => {
-			setAlert(null);
-		}, 3000);
 	};
 
 	return (
@@ -52,7 +44,7 @@ const App = () => {
 								path="/"
 								render={() => (
 									<Fragment>
-										<Search setAlert={showAlert} />
+										<Search />
 										<Users />
 									</Fragment>
 								)}
@@ -71,5 +63,5 @@ const App = () => {
 		</GithubState>
 	);
 };
-
+//setAlert={showAlert} 
 export default App;
