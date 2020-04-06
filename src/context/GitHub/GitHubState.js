@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
-import { SEARCH_USERS, GET_USER, CLEAR_USERS, SET_LOADING, GET_REPOS, ALL_USERS } from '../../types';
+import { SEARCH_USERS, GET_USER, ALL_USERS, CLEAR_USERS, SET_LOADING, GET_REPOS,SET_ALERT,SHOW_ALERT } from '../../types';
 
 import GithubContext from './githubContext';
 import GithubReducer from './githubReducer';
@@ -13,7 +13,8 @@ const GitHubState = (props) => {
 		users: [],
 		user: {},
 		repos: [],
-		loading: false
+		loading: false,
+		alert:null
 	};
 
 	const [ state, dispatch ] = useReducer(GithubReducer, initialState);
@@ -64,6 +65,39 @@ const GitHubState = (props) => {
 			type: SET_LOADING
 		});
 	};
+
+	//setAlert
+	const showAlert = (msg, type) => {
+		setAlert(msg,type);
+
+		setTimeout(() => {
+			dispatch({
+				type:SHOW_ALERT
+			});
+		}, 3000); 
+	};
+
+    const setAlert=(msg,type)=>{
+		dispatch({
+			type:SET_ALERT,
+			payload: { msg: msg ,
+					   type: type
+					}
+		});
+	}
+	// get repositories
+	const getRepos = async (username) => {
+		setLoading();
+		const res = await axios.get(
+			`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${client_id}&client_secret=${secret_key}`
+		);
+		dispatch({
+			type: GET_REPOS,
+			payload : res.data
+		})
+	};
+
+
 	return (
 		<GithubContext.Provider
 			value={{
@@ -71,10 +105,13 @@ const GitHubState = (props) => {
 				user: state.user,
 				repos: state.repos,
 				loading: state.loading,
+				alert:state.alert,
 				searchUsers,
 				allUsers,
 				clearUsers,
-				getUser
+				getUser,
+				showAlert,
+				getRepos
 			}}
 		>
 			{props.children}
