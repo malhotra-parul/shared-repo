@@ -1,9 +1,15 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import Spinner from '../layouts/Spinner';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Repos from './Repos';
-const User = ({ loading, user, getUser, getUserRepos, repos, match }) => {
+import GithubContext from '../../context/Github/githubContext';
+
+const User = ({ match }) => {
+
+	const githubContext = useContext(GithubContext);
+	const { loading, user, getUser, repos, getUserRepos} = githubContext;
+
 	useEffect(() => {
 		getUser(match.params.login);
         getUserRepos(match.params.login);
@@ -89,9 +95,6 @@ const User = ({ loading, user, getUser, getUserRepos, repos, match }) => {
 };
 
 User.propTypes = {
-	loading: PropTypes.bool.isRequired,
-	user: PropTypes.object.isRequired,
-	getUser: PropTypes.func.isRequired,
 	getUserRepos: PropTypes.func.isRequired,
 	repos: PropTypes.array.isRequired
 };
