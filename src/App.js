@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import GithubState from "./context/Github/GithubState";
 import NavBar from "./components/layouts/NavBar";
@@ -20,18 +20,6 @@ const App = () => {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      const res = await axios.get(
-        `https://api.github.com/users?client_id=${client_id}&client_secret=${secret_key}`
-      );
-      setUsers(res.data);
-      setLoading(false);
-    }
-    fetchData();
-  }, []);
 
 
 
@@ -55,10 +43,7 @@ const App = () => {
     setLoading(false);
   };
 
-  const clearUsers = () => {
-    setUsers([]);
-    setLoading(false);
-  };
+ 
 
   const showAlert = (msg, type) => {
     setAlert({ msg: msg, type: type });
@@ -82,8 +67,6 @@ const App = () => {
                 render={() => (
                   <Fragment>
                     <Search
-                      clearUsers={clearUsers}
-                      showClear={users.length > 1 ? true : false}
                       setAlert={showAlert}
                     />
                     <Users />
